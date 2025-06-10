@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Standard Best Practices P4 - Code Review Report</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="nav-panel">
+        <a href="index.html" class="back-link">← Back to Overview</a>
+        <div class="nav-header">
+            <h2>Coding Standard Best Practices P4
+                <div class="summary-stats">
+                    <div class="summary-chip summary-following">Following: 2</div>
+                    <div class="summary-chip summary-not-following">Not Following: 5</div>
+                    <div class="summary-chip summary-partial">Partial: 3</div>
+                </div>
+            </h2>
+        </div>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="#in-app-update" class="nav-link">51. In-App Update Implementation</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#privacy-info" class="nav-link">52. Privacy Info File Implementation</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#app-icons" class="nav-link">53. App Icons Implementation</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#network-connectivity" class="nav-link">54. Network Connectivity Check</a>
+                <div class="status-tag status-following">Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#flutter-version" class="nav-link">55. Flutter Version Check</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#native-module" class="nav-link">56. Native Module Integration</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#dead-code" class="nav-link">57. Dead Code Analysis</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#data-model" class="nav-link">58. Data Model Parameters Analysis</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#getx-controller" class="nav-link">59. GetX controller separation</a>
+                <div class="status-tag status-following">Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#cicd-setup" class="nav-link">60. CICD setup</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <div id="content-placeholder">
+            <!-- In-App Update Implementation -->
+            <div class="question-section" id="in-app-update">
+                <h3>51. In-App Update Implementation</h3>
+                <p class="question">Is In-App update support provided for the app?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The app has implemented Firebase Remote Config integration that can be used for version checking, as seen in remote_config_service.dart with RemoteConfigServices class.</li>
+                        <li>The app uses package_info_plus to retrieve the current app version with PackageInfo class.</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>No complete implementation of in-app update flow that forces users to update when a new version is available.</li>
+                        <li>Missing code to compare the current version against the remote version to determine if an update is required.</li>
+                        <li>No UI implementation for showing update dialogs or prompts.</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Complete the implementation of version comparison logic to detect when updates are needed.</li>
+                        <li>Add UI components like alert dialogs to prompt users about available updates.</li>
+                        <li>Implement different update strategies (immediate update vs flexible update) based on the severity of the update.</li>
+                        <li>Add direct links to app stores for seamless update experience.</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-partially-following" onclick="toggleDropdown(this)">
+                        Following Partially
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'not-following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'partially-following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Privacy Info File Implementation -->
+            <div class="question-section" id="privacy-info">
+                <h3>52. Privacy Info File Implementation</h3>
+                <p class="question">Is Privacy update file added in the app?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>No PrivacyInfo.xcprivacy file was found in the iOS project structure.</li>
+                        <li>The project doesn't have any implementation of the required privacy declarations for iOS App Store submissions.</li>
+                        <li>No evidence of privacy permissions declarations in Info.plist that align with Apple's requirements.</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Create a PrivacyInfo.xcprivacy file in the iOS project with accurate permission declarations.</li>
+                        <li>Ensure the file includes all required data types that the app accesses (like location, contacts, photos, etc.).</li>
+                        <li>Align the privacy declarations with the actual app usage to avoid rejection during App Store review.</li>
+                        <li>Add appropriate usage description strings in Info.plist for all required permissions.</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-not-following" onclick="toggleDropdown(this)">
+                        Not Following
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'not-following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'partially-following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- App Icons Implementation -->
+            <div class="question-section" id="app-icons">
+                <h3>53. App Icons Implementation</h3>
+                <p class="question">Are app icons settled with all formats in the app?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>For iOS, the app has properly implemented app icons in various required sizes in the AppIcon.appiconset directory with all required iOS icon sizes from 20pt to 1024pt.</li>
+                        <li>Icons are provided with appropriate @1x, @2x, and @3x variants for all required device types (iPhone and iPad).</li>
+                        <li>The 1024x1024 App Store icon is included.</li>
+                        <li>For Android, the app includes basic launcher icons in the standard density buckets (mipmap-mdpi to mipmap-xxxhdpi).</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>Android adaptive icons are missing: No foreground layer (ic_launcher_foreground.png or XML), No background layer (ic_launcher_background.png or XML), No ic_launcher.xml adaptive icon configuration.</li>
+                        <li>Round icon variants for Android are missing (ic_launcher_round.png).</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Implement proper adaptive icon support for Android by creating foreground and background layers with XML configuration files.</li>
+                        <li>Add round icon variants for Android for better support across different device manufacturers.</li>
+                        <li>Consider using an icon generation tool like flutter_launcher_icons package to automatically generate all required icon formats and sizes from a single source image.</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-partially-following" onclick="toggleDropdown(this)">
+                        Following Partially
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'not-following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'partially-following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Network Connectivity Check -->
+            <div class="question-section" id="network-connectivity">
+                <h3>54. Network Connectivity Check</h3>
+                <p class="question">Does network connectivity check handled in app?</p>
+                <div class="status status-following">Following</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The app properly implements network connectivity monitoring using the connectivity_plus package in connection_manager_controller.dart with ConnectionManagerController class.</li>
+                        <li>The app also handles network-related exceptions in API calls in remote_services.dart with proper SocketException and TimeoutException handling.</li>
+                        <li>Network state changes are properly monitored through a subscription that is properly cleaned up in the onClose method.</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Consider implementing a more user-friendly UI for network disconnection states, such as a snackbar or banner.</li>
+                        <li>Add automatic retry mechanisms for failed API calls when the network is restored.</li>
+                        <li>Implement offline caching for critical data to improve the user experience during intermittent connectivity.</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-following" onclick="toggleDropdown(this)">
+                        Following
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'not-following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'partially-following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flutter Version Check -->
+            <div class="question-section" id="flutter-version">
+                <h3>55. Flutter Version Check</h3>
+                <p class="question">Does app is upgraded with flutter latest version?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The app uses a recent Dart SDK version range (>=3.4.0 <4.0.0) in pubspec.yaml.</li>
+                        <li>Many dependencies are using relatively recent versions (e.g., get: ^4.6.6, http: ^1.1.0).</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>Some packages might not be on the latest version (e.g., shared_preferences: ^2.0.6 when newer versions exist).</li>
+                        <li>The pubspec.yaml doesn't specify a flutter SDK version constraint explicitly.</li>
+                        <li>There's no documentation about which Flutter version is required for the project.</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Specify a Flutter SDK constraint explicitly in the pubspec.yaml file.</li>
+                        <li>Update all dependencies to their latest compatible versions.</li>
+                        <li>Document the required Flutter SDK version in the README.md file.</li>
+                        <li>Set up a regular dependency update schedule to keep the project current with the Flutter ecosystem.</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-partially-following" onclick="toggleDropdown(this)">
+                        Following Partially
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'not-following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'partially-following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Native Module Integration -->
+            <div class="question-section" id="native-module">
+                <h3>56. Native Module Integration</h3>
+                <p class="question">Is any native module added in the project?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>The MainActivity.kt file is minimal with no custom native code or platform channel implementation.</li>
+                        <li>No evidence of iOS native code customization in the AppDelegate.swift file.</li>
+                        <li>No custom platform channels or method channels implemented for native functionality.</li>
+                        <li>The app appears to rely solely on Flutter plugins for platform-specific features rather than custom native modules.</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>If there are specific features requiring native implementation, consider adding appropriate platform channels.</li>
+                        <li>Document any native code integration in the README.md file for better maintainability.</li>
+                        <li>Ensure native code follows platform-specific best practices and coding standards.</li>
+                        <li>Add proper error handling and lifecycle management for any native modules that might be added in the future.</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-not-following" onclick="toggleDropdown(this)">
+                        Not Following
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'not-following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'partially-following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dead Code Analysis -->
+            <div class="question-section" id="dead-code">
+                <h3>57. Dead Code Analysis</h3>
+                <p class="question">Is there any dead code in the project?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>Commented-out code in connection_manager_controller.dart with unused connectivity handling code.</li>
+                        <li>Dead code in remote_services.dart where exceptions are thrown but the flow continues with improper exception handling.</li>
+                        <li>Unused imports in various files.</li>
+                        <li>Commented-out sections in pubspec.yaml and other configuration files.</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Remove all commented-out code that is no longer needed.</li>
+                        <li>Fix error handling in API service methods to properly throw exceptions.</li>
+                        <li>Remove unused imports and variables.</li>
+                        <li>Use static code analysis tools to identify and eliminate dead code automatically.</li>
+                        <li>Implement regular code reviews to prevent dead code accumulation.</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-not-following" onclick="toggleDropdown(this)">
+                        Not Following
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'not-following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'partially-following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Model Parameters Analysis -->
+            <div class="question-section" id="data-model">
+                <h3>58. Data Model Parameters Analysis</h3>
+                <p class="question">Is data model parameter are marked as final?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>In auth_success_model.dart, model parameters are not marked as final (String? tokenType, String? accessToken, etc.).</li>
+                        <li>Similar pattern is observed in other model classes where fields are mutable and not marked as final.</li>
+                        <li>The models do not follow immutable data pattern which is recommended for better code stability.</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Mark all model parameters as final to ensure immutability.</li>
+                        <li>Use copyWith methods for creating modified instances of models instead of changing properties directly.</li>
+                        <li>Consider using code generation libraries like freezed or built_value for generating immutable models.</li>
+                        <li>Add proper documentation explaining the immutability pattern to maintain consistency across the codebase.</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-not-following" onclick="toggleDropdown(this)">
+                        Not Following
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'not-following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'partially-following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GetX controller separation -->
+            <div class="question-section" id="getx-controller">
+                <h3>59. GetX controller separation</h3>
+                <p class="question">Is controller separation applied whenever needed?</p>
+                <div class="status status-following">Following</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The project uses GetX for state management and follows a well-structured controller-based approach for separating business logic from UI.</li>
+                        <li>Controllers are properly organized by feature/module with clear separation of concerns: Authentication is split into separate controllers, Feature-specific controllers are focused on specific functionality.</li>
+                        <li>Controllers are placed in appropriate directories that match their functionality, making the codebase more maintainable.</li>
+                        <li>Common functionality is extracted into mixins like ErrorHandler to promote code reuse.</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Continue the good practice of creating focused controllers for specific functionality.</li>
+                        <li>Consider adding more comprehensive documentation to controller methods to improve maintainability.</li>
+                        <li>Ensure that error handling is consistent across all controllers by always using the ErrorHandler mixin.</li>
+                        <li>Regularly review controllers to identify any that are growing too large and might need further separation.</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-following" onclick="toggleDropdown(this)">
+                        Following
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'not-following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'partially-following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CICD setup -->
+            <div class="question-section" id="cicd-setup">
+                <h3>60. CICD setup</h3>
+                <p class="question">Any CICD setup configured with the project?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>No .github/workflows directory or YAML files for GitHub Actions.</li>
+                        <li>No evidence of BitBucket Pipelines, GitLab CI, or other CI/CD configuration files.</li>
+                        <li>No configuration for automated testing, building, or deployment.</li>
+                        <li>No documentation about the CI/CD setup or deployment process.</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Implement a CI/CD pipeline using GitHub Actions, GitLab CI, or similar tools.</li>
+                        <li>Configure automated workflows for running static code analysis, executing tests, building debug and release versions, and generating artifacts for distribution.</li>
+                        <li>Add status badges to the README.md to show the CI/CD status.</li>
+                        <li>Document the CI/CD process for the development team.</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-not-following" onclick="toggleDropdown(this)">
+                        Not Following
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'not-following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'partially-following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleDropdown(button) {
+            const dropdown = button.parentElement;
+            const isOpen = dropdown.classList.contains('open');
+            
+            // Close all dropdowns
+            document.querySelectorAll('.status-dropdown').forEach(d => d.classList.remove('open'));
+            
+            // Open this dropdown if it wasn't already open
+            if (!isOpen) {
+                dropdown.classList.add('open');
+            }
+        }
+
+        function setStatus(button, newStatus, statusClass, dropdown) {
+            button.textContent = newStatus;
+            button.className = `status-button status-${statusClass}`;
+            
+            // Update the navigation link status
+            const questionSection = button.closest('.question-section');
+            const questionId = questionSection.id;
+            const navLink = document.querySelector(`a[href="#${questionId}"]`);
+            
+            if (navLink) {
+                const statusTag = navLink.parentElement.querySelector('.status-tag');
+                if (statusTag) {
+                    statusTag.className = `status-tag status-${statusClass}`;
+                    statusTag.textContent = newStatus;
+                }
+            }
+            
+            // Close dropdown
+            dropdown.parentElement.classList.remove('open');
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.status-dropdown')) {
+                document.querySelectorAll('.status-dropdown').forEach(d => d.classList.remove('open'));
+            }
+        });
+    </script>
+</body>
+</html>

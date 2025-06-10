@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution Setup Best Practice - Code Review Report</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="nav-panel">
+        <a href="index.html" class="back-link">← Back to Overview</a>
+        <div class="nav-header">
+            <h2>Solution Setup Best Practice
+                <div class="summary-stats">
+                    <div class="summary-chip summary-following">Following: 1</div>
+                    <div class="summary-chip summary-not-following">Not Following: 6</div>
+                    <div class="summary-chip summary-partial">Partial: 2</div>
+                </div>
+            </h2>
+        </div>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="#source-code-repository" class="nav-link">1. Source Code Repository Configuration</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#gitflow-workflow" class="nav-link">2. Gitflow Workflow Implementation</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#pre-commit-hooks" class="nav-link">3. Pre-commit Hooks</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#readme-file" class="nav-link">4. README File</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#linter-configuration" class="nav-link">5. Linter Configuration</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#gitignore-file" class="nav-link">6. .gitignore File</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#release-tags" class="nav-link">7. Release Tags</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#application-id" class="nav-link">8. Application ID Configuration</a>
+                <div class="status-tag status-following">Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#git-pr-review" class="nav-link">9. Git: PR Review</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <div id="content-placeholder">
+            <!-- Source Code Repository Configuration -->
+            <div class="question-section" id="source-code-repository">
+                <h3>1. Source Code Repository Configuration</h3>
+                <p class="question">Is Source Code Repository configured and code is pushed and maintained properly?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>As client provided us a repository through the zip.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Gitflow Workflow Implementation -->
+            <div class="question-section" id="gitflow-workflow">
+                <h3>2. Gitflow Workflow Implementation</h3>
+                <p class="question">Gitflow model initialised?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>As client provided us a repository through the zip.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Pre-commit Hooks -->
+            <div class="question-section" id="pre-commit-hooks">
+                <h3>3. Pre-commit Hooks</h3>
+                <p class="question">Are pre-commit hooks been used?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>There is no evidence of pre-commit hooks configuration in the visible project structure.</li>
+                        <li>No pre-commit configuration files like .pre-commit-config.yaml are visible in the project root.</li>
+                    </ul>
+                    <h4>Recommendation:</h4>
+                    <ul>
+                        <li>Set up pre-commit hooks to automate checks before code is committed:
+                            <ul>
+                                <li>Add a .pre-commit-config.yaml file to the project root</li>
+                                <li>Configure hooks for Flutter/Dart specific checks like:
+                                    <ul>
+                                        <li>Dart format/lint</li>
+                                        <li>Flutter analyze</li>
+                                        <li>Unit test verification</li>
+                                        <li>Commit message format validation</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>Document the pre-commit hook usage in the README file.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- README File -->
+            <div class="question-section" id="readme-file">
+                <h3>4. README File</h3>
+                <p class="question">Is README file added?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The project has a README.md file present at the root level.</li>
+                    </ul>
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>Cannot verify if the README contains comprehensive information about project overview, setup instructions, and usage guidelines.</li>
+                        <li>Cannot confirm if the README includes the Server API actual Base URL.</li>
+                        <li>Unable to verify if the README is regularly updated with new dependencies or project setup changes.</li>
+                    </ul>
+                    <h4>Recommendation:</h4>
+                    <ul>
+                        <li>Ensure the README.md contains:
+                            <ul>
+                                <li>Project overview and purpose</li>
+                                <li>Setup instructions (development environment, dependencies)</li>
+                                <li>Usage guidelines</li>
+                                <li>Server API base URL</li>
+                            </ul>
+                        </li>
+                        <li>Update the README whenever new packages, Gradle dependencies, or configurations are added.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Linter Configuration -->
+            <div class="question-section" id="linter-configuration">
+                <h3>5. Linter Configuration</h3>
+                <p class="question">Has the Linter configured to highlight code smell during code development itself to reduce the correction cycles from code analysis tools?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>No analysis_options.yaml file is visible in the project root directory, which is essential for configuring linter rules.</li>
+                        <li>Without proper linter configuration, code smells cannot be highlighted during development.</li>
+                    </ul>
+                    <h4>Recommendation:</h4>
+                    <ul>
+                        <li>Add an analysis_options.yaml file in the project root with appropriate linter rules.</li>
+                        <li>Consider using Flutter's recommended linting rules or the very_good_analysis package for stricter linting.</li>
+                        <li>Configure rules specific to the project requirements to catch common issues early.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- .gitignore File -->
+            <div class="question-section" id="gitignore-file">
+                <h3>6. .gitignore File</h3>
+                <p class="question">.gitignore file has been added and define properly?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The project appears to have a .gitignore file in place, as evidenced by the structured repository that properly excludes certain build artifacts.</li>
+                    </ul>
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>Cannot fully verify if the .gitignore file correctly ignores all unnecessary files without examining its contents.</li>
+                        <li>Cannot confirm if the file uses appropriate wildcard patterns instead of listing individual files.</li>
+                    </ul>
+                    <h4>Recommendation:</h4>
+                    <ul>
+                        <li>Ensure the .gitignore file follows Flutter/Dart best practices by including:
+                            <ul>
+                                <li>Build outputs (/build/)</li>
+                                <li>Dependencies (/.dart_tool/, /.flutter-plugins, /.flutter-plugins-dependencies)</li>
+                                <li>IDE-specific files (/.idea/, /.vscode/)</li>
+                                <li>Local configuration files that shouldn't be shared</li>
+                            </ul>
+                        </li>
+                        <li>Use appropriate wildcard patterns (folder_name/*) or directory syntax (folder_name/) instead of listing individual files.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Release Tags -->
+            <div class="question-section" id="release-tags">
+                <h3>7. Release Tags</h3>
+                <p class="question">Are we adding release tags on source repository?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>As client provided us a repository through the zip.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Application ID Configuration -->
+            <div class="question-section" id="application-id">
+                <h3>8. Application ID Configuration</h3>
+                <p class="question">Is applicationID proper?</p>
+                <div class="status status-following">Following</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>Based on the presence of a properly structured Android and iOS configuration, the application ID appears to be configured appropriately.</li>
+                        <li>The project structure suggests a production-ready application with proper application identifiers in place.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Git: PR Review -->
+            <div class="question-section" id="git-pr-review">
+                <h3>9. Git: PR Review</h3>
+                <p class="question">Are large PRs being approved frequently?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>As client provided us a repository through the zip.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Update active nav item
+                    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+                    this.closest('.nav-item').classList.add('active');
+                }
+            });
+        });
+
+        // Highlight active section while scrolling
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.question-section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.closest('.nav-item').classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.closest('.nav-item').classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

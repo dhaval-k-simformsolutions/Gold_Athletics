@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Standard Best Practices - P2 - Code Review Report</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="nav-panel">
+        <a href="index.html" class="back-link">← Back to Overview</a>
+        <div class="nav-header">
+            <h2>Coding Standard Best Practices - P2
+                <div class="summary-stats">
+                    <div class="summary-chip summary-following">Following: 1</div>
+                    <div class="summary-chip summary-not-following">Not Following: 3</div>
+                    <div class="summary-chip summary-partial">Partial: 7</div>
+                </div>
+            </h2>
+        </div>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="#pending-tasks-todo" class="nav-link">29. Pending Tasks and TODO</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#generic-type" class="nav-link">30. Generic Type</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#related-meaningful-commits" class="nav-link">31. Related and Meaningful Commits</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#exception-error-handling" class="nav-link">32. Exception and Error Handling</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#oops-concepts-analysis" class="nav-link">33. OOPs Concepts Analysis</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#extensions" class="nav-link">34. Extensions</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#documented-comment" class="nav-link">35. Documented Comment</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#dependency-injection" class="nav-link">36. Dependency Injection</a>
+                <div class="status-tag status-following">Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#print-statements" class="nav-link">37. Print Statements</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#type-casting" class="nav-link">38. Type Casting</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#api-layer" class="nav-link">39. API Layer</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <div id="content-placeholder">
+            <!-- Pending Tasks and TODO -->
+            <div class="question-section" id="pending-tasks-todo">
+                <h3>29. Pending Tasks and TODO</h3>
+                <p class="question">Are pending things being marked properly in code?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>The codebase lacks consistent use of standard keywords like TODO or FIXME to mark pending tasks or incomplete implementations.</li>
+                        <li>A search for these standard markers doesn't yield results, suggesting that either pending tasks aren't properly marked or they are marked using non-standard notation.</li>
+                        <li>There is a commented code block in `lib/source/bottom_tab/main_campagin_notification/controller/save_fcm_token_controller.dart` that indicates incomplete implementation without proper TODO markers.</li>
+                    </ul>
+                    <h4>Recommendation:</h4>
+                    <ul>
+                        <li>Implement a consistent system for marking pending tasks using standard keywords (TODO, FIXME) that can be easily tracked by IDE tools.</li>
+                        <li>Add clear descriptions and assignees to TODOs where applicable: `// TODO(username): Implement token refresh mechanism by [date]`</li>
+                        <li>Consider using a linter rule to prevent TODOs from staying in the codebase for too long without resolution.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Generic Type -->
+            <div class="question-section" id="generic-type">
+                <h3>30. Generic Type</h3>
+                <p class="question">Generics being used when required?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The codebase uses generics in some API service methods, such as `Future<dynamic>` in remote service methods.</li>
+                        <li>Standard generic types like `List<T>` and `Map<K, V>` are used appropriately in several places.</li>
+                    </ul>
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>Many methods in service classes use `dynamic` return types instead of specific generic types, which reduces type safety.</li>
+                        <li>In the file `lib/services/src/error_handler_controller.dart`, type casting is used with `as List<dynamic>` which could be better handled with proper generics.</li>
+                    </ul>
+                    <h4>Recommendation:</h4>
+                    <ul>
+                        <li>Replace `dynamic` types with specific generic types for better type safety and code readability.</li>
+                        <li>Create generic model classes for API responses to enforce type safety.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Related and Meaningful Commits -->
+            <div class="question-section" id="related-meaningful-commits">
+                <h3>31. Related and Meaningful Commits</h3>
+                <p class="question">Commits being made are related and meaningful?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>As client provided us a repository through the zip.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Exception and Error Handling -->
+            <div class="question-section" id="exception-error-handling">
+                <h3>32. Exception and Error Handling</h3>
+                <p class="question">Is exception handling and error handling properly handled?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The application has dedicated error handling for API calls in `lib/services/src/remote_services.dart` with try-catch blocks.</li>
+                        <li>Proper error response parsing and user feedback implementation is present.</li>
+                    </ul>
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>Some catch blocks are too generic and don't provide specific error handling for different exception types.</li>
+                        <li>Missing comprehensive error logging for debugging purposes.</li>
+                    </ul>
+                    <h4>Recommendation:</h4>
+                    <ul>
+                        <li>Implement more specific exception handling for different error scenarios.</li>
+                        <li>Add proper error logging mechanisms for better debugging and monitoring.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- OOPs Concepts Analysis -->
+            <div class="question-section" id="oops-concepts-analysis">
+                <h3>33. OOPs Concepts Analysis</h3>
+                <p class="question">Are OOPs concepts being followed?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The codebase uses class-based design with clear responsibilities in controllers and services.</li>
+                        <li>Inheritance is used appropriately in some areas for code reuse.</li>
+                    </ul>
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>Some classes violate single responsibility principle with multiple concerns.</li>
+                        <li>Encapsulation could be improved with better use of private members.</li>
+                    </ul>
+                    <h4>Recommendation:</h4>
+                    <ul>
+                        <li>Review large classes and split them based on single responsibility principle.</li>
+                        <li>Improve encapsulation by making internal implementation details private.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Extensions -->
+            <div class="question-section" id="extensions">
+                <h3>34. Extensions</h3>
+                <p class="question">Are extenstions being used properly?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>Some extension methods are used for utility functions on built-in types.</li>
+                    </ul>
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>Many utility methods that could be extensions are implemented as static methods in separate classes.</li>
+                        <li>Missing extension methods for common operations on custom types.</li>
+                    </ul>
+                    <h4>Recommendation:</h4>
+                    <ul>
+                        <li>Convert utility methods to extension methods where appropriate for better code organization.</li>
+                        <li>Create extension methods for frequently used operations on custom types.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Documented Comment -->
+            <div class="question-section" id="documented-comment">
+                <h3>35. Documented Comment</h3>
+                <p class="question">Is code documented properly?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>Some classes and methods have basic documentation comments.</li>
+                    </ul>
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>Inconsistent use of triple-slash (///) documentation comments across the codebase.</li>
+                        <li>Missing parameter and return value documentation for many public methods.</li>
+                    </ul>
+                    <h4>Recommendation:</h4>
+                    <ul>
+                        <li>Add comprehensive documentation comments for all public APIs.</li>
+                        <li>Include parameter descriptions and return value explanations in method documentation.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Dependency Injection -->
+            <div class="question-section" id="dependency-injection">
+                <h3>36. Dependency Injection</h3>
+                <p class="question">Is DI being followed for loosely coupled code?</p>
+                <div class="status status-following">Following</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The application uses GetX dependency injection with Get.put() and Get.find() methods effectively.</li>
+                        <li>Controllers and services are properly injected and managed through the DI container.</li>
+                        <li>Loose coupling is maintained between different layers of the application.</li>
+                    </ul>
+                    <h4>Recommendation:</h4>
+                    <ul>
+                        <li>Continue the current approach and consider documenting the DI patterns used.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Print Statements -->
+            <div class="question-section" id="print-statements">
+                <h3>37. Print Statements</h3>
+                <p class="question">Are there any commented code or print statements in code?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>Most production code avoids print statements for debugging.</li>
+                    </ul>
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>Some commented-out code blocks remain in the codebase.</li>
+                        <li>Occasional debug print statements found in some files.</li>
+                    </ul>
+                    <h4>Recommendation:</h4>
+                    <ul>
+                        <li>Remove all commented-out code and debug print statements.</li>
+                        <li>Use proper logging mechanisms instead of print statements for debugging.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Type Casting -->
+            <div class="question-section" id="type-casting">
+                <h3>38. Type Casting</h3>
+                <p class="question">Is type casting being used wisely?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>Excessive use of type casting without proper type checks.</li>
+                        <li>Use of unsafe casting operations that could lead to runtime exceptions.</li>
+                    </ul>
+                    <h4>Recommendation:</h4>
+                    <ul>
+                        <li>Implement proper type checks before casting operations.</li>
+                        <li>Use safer alternatives like type checks with `is` operator before casting.</li>
+                        <li>Consider using generic types to avoid the need for casting.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- API Layer -->
+            <div class="question-section" id="api-layer">
+                <h3>39. API Layer</h3>
+                <p class="question">Is API layer properly implemented and supports common failure scenarios?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>API layer has basic error handling and response parsing mechanisms.</li>
+                        <li>HTTP status codes are handled appropriately in most cases.</li>
+                    </ul>
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>Missing comprehensive retry logic for failed requests.</li>
+                        <li>Token refresh mechanism could be more robust.</li>
+                        <li>Network connectivity checks are not consistently implemented.</li>
+                    </ul>
+                    <h4>Recommendation:</h4>
+                    <ul>
+                        <li>Implement comprehensive retry logic with exponential backoff.</li>
+                        <li>Add robust token refresh and network connectivity checking mechanisms.</li>
+                        <li>Centralize API error handling for consistency across the application.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Update active nav item
+                    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+                    this.closest('.nav-item').classList.add('active');
+                }
+            });
+        });
+
+        // Highlight active section while scrolling
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.question-section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.closest('.nav-item').classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.closest('.nav-item').classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

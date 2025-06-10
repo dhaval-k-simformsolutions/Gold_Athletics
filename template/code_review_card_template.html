@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <!-- Category Title -->
+    <title>Solution Setup Best Practice - Code Review Report</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="nav-panel">
+        <a href="index.html" class="back-link">← Back to Overview</a>
+        <div class="nav-header">
+          <!-- Category Title --> 
+          <h2>Solution Setup Best Practice
+                <div class="summary-stats">
+                  <!-- List out all category questions -->
+                    <div class="summary-chip summary-following">Following: 6</div>
+                    <div class="summary-chip summary-not-following">Not Following: 2</div>
+                    <div class="summary-chip summary-partial">Partial: 1</div>
+                </div>
+            </h2>
+        </div>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="#source-code-repository" class="nav-link">1. Source Code Repository Configuration</a>
+                <div class="status-tag status-following">Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#gitflow-workflow" class="nav-link">2. Gitflow Workflow Implementation</a>
+                <div class="status-tag status-following">Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#pre-commit-hooks" class="nav-link">3. Pre-commit Hooks</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#readme-file" class="nav-link">4. README File</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#linter-configuration" class="nav-link">5. Linter Configuration</a>
+                <div class="status-tag status-following">Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#gitignore-file" class="nav-link">6. .gitignore File</a>
+                <div class="status-tag status-following">Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#release-tags" class="nav-link">7. Release Tags</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#application-id" class="nav-link">8. Application ID Configuration</a>
+                <div class="status-tag status-following">Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#git-pr-review" class="nav-link">9. Git: PR Review</a>
+                <div class="status-tag status-following">Following</div>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <div id="content-placeholder">
+            <!-- Source Code Repository Configuration -->
+             <!-- Question Contents-->
+            <div class="question-section" id="source-code-repository">
+                <h3>1. Source Code Repository Configuration</h3>
+                <p class="question">Is Source Code Repository configured and code is pushed and maintained properly?</p>
+                <div class="status status-following">Following</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>Repository is properly initialized with Git</li>
+                        <li>Project structure follows standard Flutter project organization</li>
+                        <li>Source code is consistently pushed and maintained</li>
+                        <li>Repository contains proper configuration files (pubspec.yaml, analysis_options.yaml, etc.)</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-following" onclick="toggleDropdown(this)">
+                        Following
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'Following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'Following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'Following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

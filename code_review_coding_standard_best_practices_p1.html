@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Standard Best Practices - P1 - Code Review Report</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="nav-panel">
+        <a href="index.html" class="back-link">← Back to Overview</a>
+        <div class="nav-header">
+            <h2>Coding Standard Best Practices - P1
+                <div class="summary-stats">
+                    <div class="summary-chip summary-following">Following: 4</div>
+                    <div class="summary-chip summary-not-following">Not Following: 4</div>
+                    <div class="summary-chip summary-partial">Partial: 3</div>
+                </div>
+            </h2>
+        </div>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="#architecture-folder-structure" class="nav-link">18. Architecture and Folder Structure</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#state-management" class="nav-link">19. State Management</a>
+                <div class="status-tag status-following">Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#environment-configuration" class="nav-link">20. Environment Configuration</a>
+                <div class="status-tag status-following">Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#access-modifiers" class="nav-link">21. Access Modifiers</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#naming-conventions" class="nav-link">22. Naming Conventions</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#null-safety" class="nav-link">23. Null Safety</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#hardcoding" class="nav-link">24. Hardcoding</a>
+                <div class="status-tag status-following">Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#code-analysis-tools" class="nav-link">25. Code Analysis Tools</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#long-methods" class="nav-link">26. Long Methods</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#server-error-messages" class="nav-link">27. Server Error Messages</a>
+                <div class="status-tag status-following">Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#if-statement-usage" class="nav-link">28. If Statement Usage</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <div id="content-placeholder">
+            <!-- Architecture and Folder Structure -->
+            <div class="question-section" id="architecture-folder-structure">
+                <h3>18. Architecture and Folder Structure</h3>
+                <p class="question">Is architechure and folder structure being set up as per project requirements?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The codebase has a clear modular structure with the `lib/` directory containing several high-level folders such as `services/`, `source/`, `utils/`, `components/`, etc.</li>
+                        <li>Feature-specific code is organized in the `source/` directory with sub-modules for different features (e.g., `authentication`, `bottom_tab`, `participant_source`, etc.)</li>
+                        <li>The application uses a proper layered architecture with separation of models, controllers, and presentation.</li>
+                    </ul>
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>Some model files are placed directly in the top-level `lib/model/` folder rather than being kept in their respective feature modules.</li>
+                        <li>The naming conventions in folder structure are inconsistent - some folders use snake_case (like `add_parents`, `bottom_tab`), while others use hyphenated names (like `in-hand-unit`).</li>
+                    </ul>
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Ensure all models specific to features are placed inside the model/ folder within that feature's directory.</li>
+                        <li>Standardize folder naming conventions to use consistent snake_case throughout the project.</li>
+                        <li>Consider adopting a more standardized architecture pattern like Clean Architecture or MVVM with clearly defined boundaries between data, domain, and presentation layers.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- State Management -->
+            <div class="question-section" id="state-management">
+                <h3>19. State Management</h3>
+                <p class="question">Is state management settled properly?</p>
+                <div class="status status-following">Following</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The app consistently uses GetX for state management across all features as evident from controller files like `login_controller.dart` and `rewards_action_controller.dart`.</li>
+                        <li>State management is implemented using GetX controllers with observable variables (using `.obs`) and proper bindings.</li>
+                        <li>Controllers are properly organized and injected using Get.put() and Get.find() methods.</li>
+                        <li>The app follows a clear separation of concerns with controllers handling business logic and state management.</li>
+                    </ul>
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>While the current implementation is consistent, consider using more granular stores for complex features to avoid very large controller files.</li>
+                        <li>Document the state management approach in the README to help onboard new developers.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Environment Configuration -->
+            <div class="question-section" id="environment-configuration">
+                <h3>20. Environment Configuration</h3>
+                <p class="question">Are different envirements being configured?</p>
+                <div class="status status-following">Following</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The project has proper environment configurations with at least two environments (development and production) as seen in the `flavor/` directory with `main_dev.dart` and `main_prod.dart`.</li>
+                        <li>The `main_common.dart` file contains logic to handle different environments with the `env` parameter.</li>
+                        <li>Configuration values like API base URLs are managed based on the environment:
+                            <pre><code>switch (env) {
+  case DEV_ENV:
+    baseURL = ConfigReader.getDevURL();
+    break;
+  case PROD_ENV:
+    baseURL = ConfigReader.getProdURL();
+    break;
+}</code></pre>
+                        </li>
+                        <li>There are separate configurations for iOS in the `ios/config/` directory with `dev/` and `prod/` subfolders.</li>
+                    </ul>
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Consider adding a UAT environment as per best practices to have three distinct environments (Dev, UAT, Production).</li>
+                        <li>Document the flavor setup in the README for easier onboarding of new developers.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Access Modifiers -->
+            <div class="question-section" id="access-modifiers">
+                <h3>21. Access Modifiers</h3>
+                <p class="question">Are access modifiers being used?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>The project does not consistently use private access modifiers (underscore prefix) for class members that should not be accessed outside their scope.</li>
+                        <li>In files like `login_controller.dart`, many methods and variables that should be private are declared publicly.</li>
+                        <li>Example from `remote_services.dart`:
+                            <pre><code>static var client = http.Client();
+static const TIME_OUT_DURATION = Duration(seconds: 60);</code></pre>
+                            These variables could be made private with an underscore prefix.
+                        </li>
+                    </ul>
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Use the underscore prefix (_) for variables and methods that should only be accessed within their own file/class.</li>
+                        <li>Review all controllers and service classes to properly encapsulate internal state and methods that don't need to be public.</li>
+                        <li>Implement a code analysis rule to enforce proper access modifier usage.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Naming Conventions -->
+            <div class="question-section" id="naming-conventions">
+                <h3>22. Naming Conventions</h3>
+                <p class="question">Are naming conventions being followed consistently?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>File and folder naming is inconsistent. For example, some folders use snake_case (`add_parents`), while others use hyphenated names (`in-hand-unit`).</li>
+                        <li>Some constants don't follow the recommended ALL_CAPS_SNAKE_CASE convention:
+                            <pre><code>static const TIME_OUT_DURATION = Duration(seconds: 60); // Correct
+const String isUserLoggedIn = "isUserLoggedIn"; // Should be IS_USER_LOGGED_IN</code></pre>
+                        </li>
+                        <li>Some variables don't follow camelCase convention:
+                            <pre><code>final NotificationController notificationController = Get.find&lt;NotificationController&gt;();</code></pre>
+                        </li>
+                        <li>Inconsistent class naming. For example, in `fundraiser_participants_controller.dart`, the class should follow PascalCase.</li>
+                    </ul>
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Standardize file and folder names to use snake_case consistently.</li>
+                        <li>Use ALL_CAPS_SNAKE_CASE for top-level constants.</li>
+                        <li>Use camelCase for variables, parameters, and method names.</li>
+                        <li>Use PascalCase for class names, enums, and type definitions.</li>
+                        <li>Add linting rules to enforce naming conventions.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Null Safety -->
+            <div class="question-section" id="null-safety">
+                <h3>23. Null Safety</h3>
+                <p class="question">Is nullsaftey properly managed?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The project uses a Dart SDK version that supports null safety (>=3.4.0 <4.0.0 in pubspec.yaml).</li>
+                        <li>Nullable types are used where appropriate using the ? suffix (e.g., `String?` in model classes).</li>
+                    </ul>
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>Excessive use of the force unwrapping operator (!) without null checks:
+                            <pre><code>if (response!.data != null) {
+  var obj = authSucessModelFromJson(response.data);
+  authSuccessObject.value = obj;
+  hideLoading();
+  return true;
+}</code></pre>
+                        </li>
+                        <li>Inconsistent use of null safety features. Some models properly handle nullability, while others don't.</li>
+                        <li>In some cases, null checks are missing before accessing properties that could be null.</li>
+                    </ul>
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Avoid using the force unwrapping operator (!) unless absolutely necessary and only after explicit null checks.</li>
+                        <li>Use null-aware operators (?., ??) consistently when dealing with potentially null values.</li>
+                        <li>Add proper null checks before accessing properties of nullable objects.</li>
+                        <li>Consider using the `required` keyword for constructor parameters when appropriate.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Hardcoding -->
+            <div class="question-section" id="hardcoding">
+                <h3>24. Hardcoding</h3>
+                <p class="question">Are there any sort of hard coding being used?</p>
+                <div class="status status-following">Following</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The app properly uses string constants defined in dedicated files like `app_strings.dart` instead of hardcoding strings directly in the UI.</li>
+                        <li>Colors are defined in a theme file and accessed through AppColors class rather than hardcoded.</li>
+                        <li>API endpoints are defined as constants in a dedicated file rather than hardcoded in the service methods.</li>
+                        <li>Environment-specific values like API base URLs are properly configured and not hardcoded.</li>
+                    </ul>
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Continue the good practice of extracting all strings, colors, and other constants to dedicated files.</li>
+                        <li>Consider implementing a more robust localization strategy for strings to support multiple languages.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Code Analysis Tools -->
+            <div class="question-section" id="code-analysis-tools">
+                <h3>25. Code Analysis Tools</h3>
+                <p class="question">Is code solution configured in code analysis tools?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>The project does not have an `analysis_options.yaml` file at the root to configure Dart's analyzer and linter rules.</li>
+                        <li>There's no evidence of custom or recommended lint rules being enforced throughout the codebase.</li>
+                        <li>Documentation comments (///) are not consistently used for public classes, functions, and important components.</li>
+                        <li>Function-level comments are often missing or incomplete.</li>
+                    </ul>
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Add an `analysis_options.yaml` file with appropriate linter rules to enforce code standards.</li>
+                        <li>Configure the analyzer to include recommended lint rules.</li>
+                        <li>Add triple-slash (///) documentation comments to all public API surfaces (classes, methods, etc.).</li>
+                        <li>Consider using a package like `very_good_analysis` for stricter linting rules.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Long Methods -->
+            <div class="question-section" id="long-methods">
+                <h3>26. Long Methods</h3>
+                <p class="question">Long methods being used?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>Several methods in controller files exceed the recommended length (40-50 lines), making them harder to understand and maintain.</li>
+                        <li>The error handling methods in `error_handler_controller.dart` contain repeated logic that could be extracted into smaller, reusable functions.</li>
+                        <li>There's a lack of decomposition of complex logic into smaller, focused methods.</li>
+                    </ul>
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Break down long methods into smaller, single-responsibility functions.</li>
+                        <li>Extract repeated logic into dedicated helper methods.</li>
+                        <li>Consider applying the "Extract Method" refactoring pattern to improve code readability.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Server Error Messages -->
+            <div class="question-section" id="server-error-messages">
+                <h3>27. Server Error Messages</h3>
+                <p class="question">Are error messages properly configured from server side?</p>
+                <div class="status status-following">Following</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>Error handling is properly implemented to use server-side error messages rather than hardcoded client-side messages:
+                            <pre><code>if (error.message!.contains("message")) {
+  CommonErrorResponse commonErrorResponse =
+      commonErrorResponseFromJson(error.message!);
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    GAHelper.showToastMessage(
+      commonErrorResponse.message ?? somethingWentWrong,
+      AppColors.redColor,
+    );
+  });
+}</code></pre>
+                        </li>
+                        <li>The app properly handles different HTTP status codes and error types through dedicated exception classes.</li>
+                        <li>Server error messages are parsed and displayed to the user with appropriate UI feedback.</li>
+                    </ul>
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Consider implementing a more centralized error handling approach to reduce code duplication.</li>
+                        <li>Add logging for server errors to help with debugging and monitoring.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- If Statement Usage -->
+            <div class="question-section" id="if-statement-usage">
+                <h3>28. If Statement Usage</h3>
+                <p class="question">Are if statements being used properly?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>Most if statements are used clearly with appropriate conditions.</li>
+                        <li>Early returns are used in some cases to avoid deep nesting.</li>
+                    </ul>
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>There are instances of deeply nested if statements, particularly in error handling code.</li>
+                        <li>Some if statements could be simplified or replaced with more concise patterns like conditional expressions or null-aware operators.</li>
+                    </ul>
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Use guard clauses and early returns to reduce nesting.</li>
+                        <li>Replace nested if statements with switch statements or pattern matching where appropriate.</li>
+                        <li>Consider extracting complex conditions into well-named methods for better readability.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Update active nav item
+                    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+                    this.closest('.nav-item').classList.add('active');
+                }
+            });
+        });
+
+        // Highlight active section while scrolling
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.question-section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.closest('.nav-item').classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.closest('.nav-item').classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

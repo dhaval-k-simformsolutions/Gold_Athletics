@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UX Best Practices - Code Review Report</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="nav-panel">
+        <a href="index.html" class="back-link">← Back to Overview</a>
+        <div class="nav-header">
+            <h2>UX Best Practices
+                <div class="summary-stats">
+                    <div class="summary-chip summary-following">Following: 3</div>
+                    <div class="summary-chip summary-not-following">Not Following: 0</div>
+                    <div class="summary-chip summary-partial">Partial: 0</div>
+                </div>
+            </h2>
+        </div>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="#theme-configuration" class="nav-link">11. Theme Configuration</a>
+                <div class="status-tag status-following">Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#custom-components-widgets" class="nav-link">12. Custom Components/Widgets</a>
+                <div class="status-tag status-following">Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#custom-components-widgets-usage" class="nav-link">13. Custom Components/Widgets Usage</a>
+                <div class="status-tag status-following">Following</div>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <div id="content-placeholder">
+            <!-- Theme Configuration -->
+            <div class="question-section" id="theme-configuration">
+                <h3>11. Theme Configuration</h3>
+                <p class="question">Is theme support has been added in the app?</p>
+                <div class="status status-following">Following</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The project has implemented a proper theme system with a custom ThemeData defined in `/lib/utils/src/app_theme.dart` through the `AppThemeDataFactory` class.</li>
+                        <li>There is a global colors file `/lib/utils/src/app_colors.dart` that defines all the app-level color constants used throughout the application.</li>
+                        <li>The theme is correctly associated with the MaterialApp in the main_common.dart file: `theme: AppThemeDataFactory.darkTheme()`.</li>
+                        <li>The theme configuration includes customization of various theme aspects such as:
+                            <ul>
+                                <li>ColorScheme</li>
+                                <li>TextTheme</li>
+                                <li>AppBarTheme</li>
+                                <li>ButtonTheme</li>
+                                <li>TabBarTheme</li>
+                                <li>DividerTheme</li>
+                                <li>IconTheme</li>
+                            </ul>
+                        </li>
+                        <li>Colors are properly sourced from the global AppColors class rather than hardcoded throughout the app.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Custom Components/Widgets -->
+            <div class="question-section" id="custom-components-widgets">
+                <h3>12. Custom Components/Widgets</h3>
+                <p class="question">Do we have created common widgets for the app?</p>
+                <div class="status status-following">Following</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The project has a well-organized `components` directory with numerous reusable widgets:
+                            <ul>
+                                <li>Custom buttons: `custom_button.dart`, `custom_circle_button.dart`, `custom_small_button.dart`</li>
+                                <li>Form elements: `custom_text_field.dart`, `phone_input_text_field.dart`</li>
+                                <li>UI components: `custom_progress.dart`, `progress_loader.dart`, `empty_screen.dart`</li>
+                                <li>Filter widgets: `reward_filter_widget.dart`, `my_team_group_filter_widget.dart`, `payment_status_mode_filter_widget.dart`</li>
+                                <li>Specialized list tiles: `dashboard_campaign_list_tile.dart`, `player_campaign_tile.dart`, `setting_list_tile.dart`</li>
+                                <li>Bottom sheets: `bottom_sheet_helper.dart`, `otp_bottomsheet.dart`, `success_message_bottomsheet.dart`</li>
+                            </ul>
+                        </li>
+                        <li>These components abstract common UI patterns and promote consistency across the app.</li>
+                        <li>The components follow a modular approach with clear separation of concerns, making them reusable across different parts of the application.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Custom Components/Widgets Usage -->
+            <div class="question-section" id="custom-components-widgets-usage">
+                <h3>13. Custom Components/Widgets Usage</h3>
+                <p class="question">Are custom components or widgets being used properly?</p>
+                <div class="status status-following">Following</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The app has a comprehensive set of custom widgets for different UI elements, and they are consistently used across the application, as evidenced by the multiple imports of `components.dart` in various screens.</li>
+                        <li>The custom components are properly abstracted and encapsulate functionality that would otherwise be duplicated. For example:
+                            <ul>
+                                <li>`CustomButton`, `CustomCircleButton`, and `CustomSmallButton` provide consistent button styling</li>
+                                <li>`CustomTextField` and `PhoneInputTextField` provide standardized form inputs</li>
+                                <li>`SRDashboardCampaignListTile` and `DashboardCampaignListTile` provide specialized list items for campaigns</li>
+                            </ul>
+                        </li>
+                        <li>Screen files like `sr_running_view.dart`, `campaign_screen.dart`, and `my_sales_screen.dart` properly import and use these custom components through the barrel file `components.dart`.</li>
+                        <li>The components handle proper platform-specific rendering, such as in `dashboard_campaign_list_tile.dart` which uses different loading indicators for Android (CircularProgressIndicator) and iOS (CupertinoActivityIndicator).</li>
+                        <li>None of the component files exceed the 3000-line limit. The largest component files are:
+                            <ul>
+                                <li>`dashboard_campaign_list_tile.dart` (~379 lines)</li>
+                                <li>`sr_campaign_list_tile.dart` (~370 lines)</li>
+                            </ul>
+                        </li>
+                        <li>The components properly utilize Flutter's widget composition pattern, encapsulating complex UI logic while remaining focused on a single responsibility.</li>
+                        <li>Bottom sheets like `OTPBottomSheetView` abstract complex UI interactions into reusable components.</li>
+                        <li>The custom components make good use of parameterization, allowing flexibility while maintaining consistent styling.</li>
+                    </ul>
+                    <h4>Recommendation:</h4>
+                    <ul>
+                        <li>Consider further breaking down some of the larger component files (like dashboard_campaign_list_tile.dart and sr_campaign_list_tile.dart) into smaller sub-components for better maintainability.</li>
+                        <li>Add more comprehensive documentation comments to the custom widgets to help developers understand their usage patterns and available customization options.</li>
+                        <li>Implement a design system documentation that showcases all available custom components to encourage their use and reduce the chance of developers creating redundant components.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Update active nav item
+                    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+                    this.closest('.nav-item').classList.add('active');
+                }
+            });
+        });
+
+        // Highlight active section while scrolling
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.question-section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.closest('.nav-item').classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.closest('.nav-item').classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

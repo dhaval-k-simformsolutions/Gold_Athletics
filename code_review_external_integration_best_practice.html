@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>External Integration Best Practice - Code Review Report</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="nav-panel">
+        <a href="index.html" class="back-link">← Back to Overview</a>
+        <div class="nav-header">
+            <h2>External Integration Best Practice
+                <div class="summary-stats">
+                    <div class="summary-chip summary-following">Following: 1</div>
+                    <div class="summary-chip summary-not-following">Not Following: 0</div>
+                    <div class="summary-chip summary-partial">Partial: 0</div>
+                </div>
+            </h2>
+        </div>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="#crash-reporting-tools" class="nav-link">10. Crash Reporting Tools</a>
+                <div class="status-tag status-following">Following</div>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <div id="content-placeholder">
+            <!-- Crash Reporting Tools -->
+            <div class="question-section" id="crash-reporting-tools">
+                <h3>10. Crash Reporting Tools</h3>
+                <p class="question">Are crash reporting tools integrated?</p>
+                <div class="status status-following">Following</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>Firebase Crashlytics is properly integrated in the project as seen in the pubspec.yaml file with the dependency: `firebase_crashlytics: ^4.3.0`.</li>
+                        <li>Firebase Crashlytics is properly initialized in the main_common.dart file.</li>
+                        <li>Firebase Crashlytics is set up to record Flutter errors, which will capture and report runtime exceptions that occur in the app.</li>
+                    </ul>
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Add custom keys and logs to Crashlytics to provide more context for crashes:
+                            <pre><code>FirebaseCrashlytics.instance.setCustomKey('userRole', userRole);
+FirebaseCrashlytics.instance.log('User performed critical action');</code></pre>
+                        </li>
+                        <li>Consider adding user identification to crash reports to better track which users are experiencing issues:
+                            <pre><code>FirebaseCrashlytics.instance.setUserIdentifier(userId);</code></pre>
+                        </li>
+                        <li>Enable collection of crash reports in debug mode for more comprehensive testing:
+                            <pre><code>await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);</code></pre>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Update active nav item
+                    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+                    this.closest('.nav-item').classList.add('active');
+                }
+            });
+        });
+
+        // Highlight active section while scrolling
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.question-section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.closest('.nav-item').classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.closest('.nav-item').classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

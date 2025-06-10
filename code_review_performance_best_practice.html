@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Best Practice - Code Review Report</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="nav-panel">
+        <a href="index.html" class="back-link">← Back to Overview</a>
+        <div class="nav-header">
+            <h2>Performance Best Practice
+                <div class="summary-stats">
+                    <div class="summary-chip summary-following">Following: 0</div>
+                    <div class="summary-chip summary-not-following">Not Following: 1</div>
+                    <div class="summary-chip summary-partial">Partial: 3</div>
+                </div>
+            </h2>
+        </div>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="#file-image-video-compression" class="nav-link">14. File/Image/Video Compression</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#caching-mechanisms" class="nav-link">15. Caching Mechanisms</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#memory-leak" class="nav-link">16. Memory Leak</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#multithreading" class="nav-link">17. Multithreading</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <div id="content-placeholder">
+            <!-- File/Image/Video Compression -->
+            <div class="question-section" id="file-image-video-compression">
+                <h3>14. File/Image/Video Compression</h3>
+                <p class="question">Are max limit of files/image/video has been taken care in case of file upload? Is there any compression applied?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The application uses image compression when uploading user profile pictures:
+                            <ul>
+                                <li>In `lib/source/authentication/screens/add_profile_screen.dart` and `lib/source/edit_profile/screens/edit-profile_screen.dart`, the app uses `ImageCompressFormat.jpg` with a `compressQuality` of 70% for profile image uploads.</li>
+                                <li>The app utilizes the `image_cropper` package (version 8.0.0) which includes compression capabilities.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>There's no clear evidence of validating maximum file size limits before upload, which could lead to unnecessarily large uploads.</li>
+                        <li>No comprehensive validation strategy was found for handling different file types (images, videos, documents) with appropriate size limits for each.</li>
+                        <li>No visible compression strategy for video uploads was found in the codebase.</li>
+                    </ul>
+                    <h4>Recommendation:</h4>
+                    <ul>
+                        <li>Implement file size validation before upload:
+                            <pre><code>Future&lt;bool&gt; validateFileSize(File file, int maxSizeInMB) async {
+  final fileSize = await file.length();
+  final maxSize = maxSizeInMB * 1024 * 1024; // Convert MB to bytes
+  return fileSize &lt;= maxSize;
+}</code></pre>
+                        </li>
+                        <li>Add compression for video uploads using packages like `video_compress`:
+                            <pre><code>Future&lt;File?&gt; compressVideo(File videoFile) async {
+  final info = await VideoCompress.compressVideo(
+    videoFile.path,
+    quality: VideoQuality.MediumQuality,
+    deleteOrigin: false,
+  );
+  return info?.file;
+}</code></pre>
+                        </li>
+                        <li>Create a consistent file handling service that manages validation, compression, and upload for all file types.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Caching Mechanisms -->
+            <div class="question-section" id="caching-mechanisms">
+                <h3>15. Caching Mechanisms</h3>
+                <p class="question">Are caching mechanism handled properly?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The application uses `cached_network_image` (version 3.1.0) to efficiently cache images and prevent redundant downloads:
+                            <ul>
+                                <li>This is properly implemented in multiple components like `global_rewards_list_tile.dart`, `player_campaign_tile.dart`, `sr_campaign_list_tile.dart`, and others.</li>
+                            </ul>
+                        </li>
+                        <li>The app loads assets efficiently by properly declaring them in the `pubspec.yaml` file.</li>
+                    </ul>
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>No evidence of proper caching strategies for video content was found.</li>
+                        <li>There's no clear implementation of caching API responses or other data for offline access.</li>
+                        <li>The project seems to rely only on `cached_network_image` without implementing more comprehensive caching strategies for other types of data.</li>
+                    </ul>
+                    <h4>Recommendation:</h4>
+                    <ul>
+                        <li>Implement a more robust caching system for API responses using packages like `hive` or `dio_cache_interceptor`:
+                            <pre><code>final dio = Dio();
+dio.interceptors.add(
+  DioCacheInterceptor(
+    options: CacheOptions(
+      store: MemCacheStore(),
+      policy: CachePolicy.forceCache,
+      hitCacheOnErrorExcept: [401, 403],
+      maxStale: const Duration(days: 1),
+    ),
+  ),
+);</code></pre>
+                        </li>
+                        <li>Add video caching for frequently accessed videos using a package like `cached_video_player` or implementing a custom caching mechanism.</li>
+                        <li>Consider using a unified caching strategy with clearly defined expiration policies and cache invalidation rules.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Memory Leak -->
+            <div class="question-section" id="memory-leak">
+                <h3>16. Memory Leak</h3>
+                <p class="question">Are there any memory leaks in codebase?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>Some controllers are properly disposed in `dispose()` methods:
+                            <ul>
+                                <li>In `lib/components/src/expanded_view.dart`, `expandController.dispose()` is correctly called.</li>
+                                <li>In `lib/source/team_sales/screen/team_sales_screen.dart`, `myFocusNode.dispose()` is properly implemented.</li>
+                                <li>In `lib/services/src/remote_config_service.dart`, a dispose method is implemented.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>Not all StatefulWidgets with controllers properly dispose of them. For example:
+                            <ul>
+                                <li>Some files have a `dispose()` method but only call `super.dispose()` without disposing of their controllers.</li>
+                                <li>No clear evidence of stream subscription cancellation was found in many files.</li>
+                            </ul>
+                        </li>
+                        <li>No systematic pattern for disposing of ScrollControllers, TextEditingControllers, or other resources.</li>
+                        <li>Several classes have `dispose()` methods that don't clean up all resources.</li>
+                    </ul>
+                    <h4>Recommendation:</h4>
+                    <ul>
+                        <li>Implement a consistent pattern for controller disposal in all StatefulWidget classes:
+                            <pre><code>@override
+void dispose() {
+  textController.dispose();
+  scrollController.dispose();
+  animationController.dispose();
+  streamSubscription.cancel();
+  super.dispose();
+}</code></pre>
+                        </li>
+                        <li>Add proper cancellation of stream subscriptions in all classes that use them:
+                            <pre><code>StreamSubscription? _subscription;
+
+void initState() {
+  super.initState();
+  _subscription = stream.listen((_) {});
+}
+
+void dispose() {
+  _subscription?.cancel();
+  super.dispose();
+}</code></pre>
+                        </li>
+                        <li>Conduct a systematic review of the codebase to identify and fix potential memory leaks by ensuring all controllers, animations, and subscriptions are properly disposed.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Multithreading -->
+            <div class="question-section" id="multithreading">
+                <h3>17. Multithreading</h3>
+                <p class="question">Is multithreading being used when needed?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>No evidence of using `compute()` or Isolates for heavy operations was found in the codebase.</li>
+                        <li>The application doesn't appear to offload CPU-intensive tasks from the main thread.</li>
+                        <li>While the app uses asynchronous programming with Futures for API calls and IO operations, it doesn't properly leverage multithreading for performance-intensive tasks.</li>
+                    </ul>
+                    <h4>Recommendation:</h4>
+                    <ul>
+                        <li>Implement the `compute()` function for CPU-intensive operations like JSON parsing or complex calculations:
+                            <pre><code>Future&lt;List&lt;Model&gt;&gt; parseJson(String jsonString) async {
+  // Use compute to move parsing to a background isolate
+  return compute(_parseJsonInBackground, jsonString);
+}
+
+List&lt;Model&gt; _parseJsonInBackground(String jsonString) {
+  final json = jsonDecode(jsonString);
+  return json.map((item) =&gt; Model.fromJson(item)).toList();
+}</code></pre>
+                        </li>
+                        <li>Use Isolates for long-running tasks or complex processing:
+                            <pre><code>Future&lt;void&gt; processLargeData(List&lt;dynamic&gt; data) async {
+  final receivePort = ReceivePort();
+  await Isolate.spawn(_processDataInBackground, [receivePort.sendPort, data]);
+  final result = await receivePort.first;
+  // Handle result
+}
+
+void _processDataInBackground(List&lt;dynamic&gt; params) {
+  final SendPort sendPort = params[0];
+  final data = params[1];
+  // Process data
+  sendPort.send(result);
+}</code></pre>
+                        </li>
+                        <li>Consider using packages like `flutter_isolate` or `worker_manager` for more ergonomic multithreading support.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Update active nav item
+                    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+                    this.closest('.nav-item').classList.add('active');
+                }
+            });
+        });
+
+        // Highlight active section while scrolling
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.question-section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.closest('.nav-item').classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.closest('.nav-item').classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

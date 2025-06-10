@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Standard Best Practices P3 - Code Review Report</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="nav-panel">
+        <a href="index.html" class="back-link">← Back to Overview</a>
+        <div class="nav-header">
+            <h2>Coding Standard Best Practices P3
+                <div class="summary-stats">
+                    <div class="summary-chip summary-following">Following: 3</div>
+                    <div class="summary-chip summary-not-following">Not Following: 3</div>
+                    <div class="summary-chip summary-partial">Partial: 5</div>
+                </div>
+            </h2>
+        </div>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="#navigation-routing" class="nav-link">40. Navigation and Routing</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#app-store-compliance" class="nav-link">41. App Store Compliance Analysis</a>
+                <div class="status-tag status-following">Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#test-cases" class="nav-link">42. Test Cases</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#env-setup" class="nav-link">43. ENV Setup</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#localization-setup" class="nav-link">44. Localization Setup</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#constant-classes" class="nav-link">45. Constant Classes</a>
+                <div class="status-tag status-following">Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#pubspec-analysis" class="nav-link">46. Pubspec.yaml Analysis</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#local-storage" class="nav-link">47. Local Storage Support</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#assets-vectors" class="nav-link">48. Assets and Vectors Management</a>
+                <div class="status-tag status-following">Following</div>
+            </li>
+            <li class="nav-item">
+                <a href="#permission-management" class="nav-link">49. Permission Management</a>
+                <div class="status-tag status-partially-following">Partially</div>
+            </li>
+            <li class="nav-item">
+                <a href="#secure-storage" class="nav-link">50. Secure Storage Implementation</a>
+                <div class="status-tag status-not-following">Not Following</div>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <div id="content-placeholder">
+            <!-- Navigation and Routing -->
+            <div class="question-section" id="navigation-routing">
+                <h3>40. Navigation and Routing</h3>
+                <p class="question">Does navigation handled properly throughout the app?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The app has a centralized routing system with all routes defined in a dedicated routes.dart file.</li>
+                        <li>Routes are organized by category (Auth Routes, Dashboard Routes, etc.) and defined as static constants.</li>
+                        <li>The app uses GetX's navigation system consistently throughout the codebase with methods like Get.toNamed() and Get.back().</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>Some navigation logic is scattered across controller files rather than being fully centralized.</li>
+                        <li>Route transitions are not consistently defined or customized throughout the app.</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Further centralize navigation logic by implementing a dedicated NavigationService class.</li>
+                        <li>Define consistent transition animations for routes to improve user experience.</li>
+                        <li>Consider using a more structured approach to route management like auto_route or go_router.</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-partially-following" onclick="toggleDropdown(this)">
+                        Following Partially
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'not-following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'partially-following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- App Store Compliance Analysis -->
+            <div class="question-section" id="app-store-compliance">
+                <h3>41. App Store Compliance Analysis</h3>
+                <p class="question">Are there any chances of rejection from google and app with any functionality?</p>
+                <div class="status status-following">Following</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The app uses standard Firebase services that comply with store policies.</li>
+                        <li>Proper build.gradle configuration for Android with appropriate namespace and SDK versions.</li>
+                        <li>The app appears to request only necessary permissions based on the used packages.</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-following" onclick="toggleDropdown(this)">
+                        Following
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'not-following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'partially-following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Cases -->
+            <div class="question-section" id="test-cases">
+                <h3>42. Test Cases</h3>
+                <p class="question">Are there any Test case added in the app?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>No test directory or test files were found in the project.</li>
+                        <li>No evidence of unit, widget, or integration tests in the codebase.</li>
+                        <li>No testing configuration in pubspec.yaml beyond the default flutter_test dependency.</li>
+                        <li>No test-related comments or TODO items suggesting planned test implementations.</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Implement unit tests for all business logic, especially in service and controller classes.</li>
+                        <li>Add widget tests for key UI components to ensure they render correctly.</li>
+                        <li>Create integration tests for critical user flows like authentication and core features.</li>
+                        <li>Consider implementing a CI/CD pipeline that runs tests automatically before merging code.</li>
+                        <li>Set up code coverage reporting to track testing progress.</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-not-following" onclick="toggleDropdown(this)">
+                        Not Following
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'not-following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'partially-following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ENV Setup -->
+            <div class="question-section" id="env-setup">
+                <h3>43. ENV Setup</h3>
+                <p class="question">Is .env managed for the project?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>No .env file is present in the project; instead, environment configuration is managed using the appConfig file located in the config directory.</li>
+                        <li>The project does not utilize packages such as flutter_dotenv for handling environment variables.</li>
+                        <li>The project uses a different approach with ConfigReader and appConfig.json instead of .env files.</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>The project does not utilize standard environment management solutions such as envied or --dart-define, which are recommended for securely handling environment variables and preventing exposure during reverse engineering.</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Implement .env file support using a package like flutter_dotenv.</li>
+                        <li>Store sensitive information like API keys, endpoints, and other configuration in .env files.</li>
+                        <li>Ensure .env files are excluded from version control using .gitignore.</li>
+                        <li>Update the existing ConfigReader to support .env files or create a bridge between the two approaches.</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-partially-following" onclick="toggleDropdown(this)">
+                        Following Partially
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'not-following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'partially-following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Localization Setup -->
+            <div class="question-section" id="localization-setup">
+                <h3>44. Localization Setup</h3>
+                <p class="question">Is localisation support added in the application?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>No dedicated localization directory (l10n/ or assets/lang/) was found.</li>
+                        <li>No evidence of using localization packages like flutter_localizations, intl, or easy_localization.</li>
+                        <li>Text strings are directly used in the UI without going through a localization system.</li>
+                        <li>No support for multiple languages in the MaterialApp configuration.</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Implement a proper localization system using flutter_localizations and intl packages.</li>
+                        <li>Create a dedicated directory for language files (e.g., assets/lang/ or l10n/).</li>
+                        <li>Extract all hardcoded strings into localization files.</li>
+                        <li>Configure MaterialApp with the appropriate localization delegates and supportedLocales.</li>
+                        <li>Create a helper class or extension to simplify accessing localized strings in the UI.</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-not-following" onclick="toggleDropdown(this)">
+                        Not Following
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'not-following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'partially-following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Constant Classes -->
+            <div class="question-section" id="constant-classes">
+                <h3>45. Constant Classes</h3>
+                <p class="question">Are constant classes managed in the app?</p>
+                <div class="status status-following">Following</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The app properly organizes constants into dedicated files in the utils/src/ directory: app_strings.dart for string constants, app_colors.dart for color constants, constants.dart for general constants, end_points.dart for API endpoints, image_assets.dart for asset paths.</li>
+                        <li>Constants are logically grouped and categorized based on their purpose.</li>
+                        <li>Constants are properly accessed throughout the app rather than using hardcoded values.</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Consider using more structured constant classes with static const values for better organization.</li>
+                        <li>Add documentation comments to explain the purpose and usage of important constants.</li>
+                        <li>Ensure all constants follow a consistent naming convention.</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-following" onclick="toggleDropdown(this)">
+                        Following
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'not-following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'partially-following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pubspec.yaml Analysis -->
+            <div class="question-section" id="pubspec-analysis">
+                <h3>46. Pubspec.yaml Analysis</h3>
+                <p class="question">Do we have handled pubspec.yaml file properly?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The pubspec.yaml file includes all necessary dependencies with specific version constraints.</li>
+                        <li>Assets are properly organized and declared in the flutter section.</li>
+                        <li>Dependencies are categorized logically (UI, network, state management, etc.).</li>
+                        <li>The SDK version constraint is appropriate (>=3.4.0 <4.0.0).</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>Some dependency versions may be outdated and could benefit from updates.</li>
+                        <li>Limited or missing inline documentation for package purposes.</li>
+                        <li>No clear separation or comments for grouping dependencies by purpose.</li>
+                        <li>Some unused sections remain in the file (commented out sections).</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Group dependencies with clear comments indicating their purpose (UI, networking, state management, etc.).</li>
+                        <li>Add brief inline comments describing the purpose of each package.</li>
+                        <li>Regularly update dependencies to their latest compatible versions.</li>
+                        <li>Remove commented-out sections that are no longer needed.</li>
+                        <li>Consider adding a dependencies_overrides section for handling conflicting packages when needed.</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-partially-following" onclick="toggleDropdown(this)">
+                        Following Partially
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'not-following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'partially-following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Local Storage Support -->
+            <div class="question-section" id="local-storage">
+                <h3>47. Local Storage Support</h3>
+                <p class="question">Are there any local storage support added?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The app implements local storage using SharedPreferences through a dedicated GALocalStorage class.</li>
+                        <li>Storage operations are properly encapsulated with clear method names and error handling.</li>
+                        <li>Constants for storage keys are defined in a separate file (app_strings.dart).</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>No implementation of more robust storage solutions like Hive or SQLite for structured data.</li>
+                        <li>Lack of type safety in some storage operations.</li>
+                        <li>No evidence of encryption for sensitive stored data.</li>
+                        <li>No proper connection disposal or management for database connections (not applicable since only SharedPreferences is used).</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Consider implementing a more robust solution like Hive or SQLite for complex data storage needs.</li>
+                        <li>Add encryption for sensitive data using packages like flutter_secure_storage or encrypt.</li>
+                        <li>Implement type-safe storage operations using strong typing or generics.</li>
+                        <li>Add proper error handling for all storage operations with fallback mechanisms.</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-partially-following" onclick="toggleDropdown(this)">
+                        Following Partially
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'not-following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'partially-following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assets and Vectors Management -->
+            <div class="question-section" id="assets-vectors">
+                <h3>48. Assets and Vectors Management</h3>
+                <p class="question">Are assets/vectors added properly or not?</p>
+                <div class="status status-following">Following</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>Assets are properly organized in dedicated directories (assets/images/, assets/icons/, assets/fonts/, assets/animation/).</li>
+                        <li>The app uses SVG format for vector graphics (via flutter_svg package) which is more scalable and efficient.</li>
+                        <li>Assets are correctly declared in the pubspec.yaml file with proper paths.</li>
+                        <li>Asset references are accessed through constants in image_assets.dart rather than hardcoded strings.</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Consider implementing an asset preloading mechanism for critical assets to improve performance.</li>
+                        <li>Add documentation for custom icons or special assets to improve maintainability.</li>
+                        <li>Consider implementing a more structured asset naming convention to ensure consistency.</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-following" onclick="toggleDropdown(this)">
+                        Following
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'not-following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'partially-following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Permission Management -->
+            <div class="question-section" id="permission-management">
+                <h3>49. Permission Management</h3>
+                <p class="question">Are Permission management handled in the app?</p>
+                <div class="status status-partially-following">Following Partially</div>
+                <div class="points">
+                    <h4>Following points:</h4>
+                    <ul>
+                        <li>The app includes the permission_handler package in pubspec.yaml, indicating an intention to handle permissions properly.</li>
+                        <li>Required permissions are declared in the Android manifest and iOS Info.plist files.</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>No centralized permission handling mechanism found in the codebase.</li>
+                        <li>Limited evidence of runtime permission requests with appropriate user messaging.</li>
+                        <li>No fallback mechanisms when permissions are denied.</li>
+                        <li>No permission status checking before performing operations that require permissions.</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Implement a centralized PermissionService to handle all permission-related operations.</li>
+                        <li>Add proper runtime permission requests with clear explanations for users.</li>
+                        <li>Implement fallback strategies when users deny permissions.</li>
+                        <li>Check permission status before attempting operations that require specific permissions.</li>
+                        <li>Add documentation for required permissions in the README.</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-partially-following" onclick="toggleDropdown(this)">
+                        Following Partially
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'not-following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'partially-following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Secure Storage Implementation -->
+            <div class="question-section" id="secure-storage">
+                <h3>50. Secure Storage Implementation</h3>
+                <p class="question">Is sensitive information stored in secure storage or with encryption?</p>
+                <div class="status status-not-following">Not Following</div>
+                <div class="points">
+                    <h4>Not Following points:</h4>
+                    <ul>
+                        <li>The app uses SharedPreferences for all storage, including potentially sensitive information like access tokens.</li>
+                        <li>No evidence of using flutter_secure_storage or other secure storage solutions.</li>
+                        <li>No implementation of encryption for sensitive data.</li>
+                        <li>Tokens and user credentials are stored as plain text in SharedPreferences.</li>
+                    </ul>
+                </div>
+                <div class="points">
+                    <h4>Recommendations:</h4>
+                    <ul>
+                        <li>Implement flutter_secure_storage for storing sensitive information like tokens and credentials.</li>
+                        <li>Add encryption for any sensitive data that needs to be stored in regular storage.</li>
+                        <li>Implement proper key management for encryption keys.</li>
+                        <li>Consider using platform-specific secure storage (Keychain for iOS, Keystore for Android) through appropriate packages.</li>
+                        <li>Regularly clear sensitive data when no longer needed (e.g., on logout).</li>
+                    </ul>
+                </div>
+                <div class="status-dropdown">
+                    <button class="status-button status-not-following" onclick="toggleDropdown(this)">
+                        Not Following
+                    </button>
+                    <div class="status-dropdown-content">
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Following', 'following', this.parentElement)">
+                            Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Not Following', 'not-following', this.parentElement)">
+                            Not Following
+                        </div>
+                        <div class="status-dropdown-item" onclick="setStatus(this.closest('.status-dropdown').querySelector('.status-button'), 'Partially Following', 'partially-following', this.parentElement)">
+                            Partially Following
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleDropdown(button) {
+            const dropdown = button.parentElement;
+            const isOpen = dropdown.classList.contains('open');
+            
+            // Close all dropdowns
+            document.querySelectorAll('.status-dropdown').forEach(d => d.classList.remove('open'));
+            
+            // Open this dropdown if it wasn't already open
+            if (!isOpen) {
+                dropdown.classList.add('open');
+            }
+        }
+
+        function setStatus(button, newStatus, statusClass, dropdown) {
+            button.textContent = newStatus;
+            button.className = `status-button status-${statusClass}`;
+            
+            // Update the navigation link status
+            const questionSection = button.closest('.question-section');
+            const questionId = questionSection.id;
+            const navLink = document.querySelector(`a[href="#${questionId}"]`);
+            
+            if (navLink) {
+                const statusTag = navLink.parentElement.querySelector('.status-tag');
+                if (statusTag) {
+                    statusTag.className = `status-tag status-${statusClass}`;
+                    statusTag.textContent = newStatus;
+                }
+            }
+            
+            // Close dropdown
+            dropdown.parentElement.classList.remove('open');
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.status-dropdown')) {
+                document.querySelectorAll('.status-dropdown').forEach(d => d.classList.remove('open'));
+            }
+        });
+    </script>
+</body>
+</html>
